@@ -12,6 +12,56 @@ public class CreateJson
         _unitTypes = unitTypes;
     }
     
+    public void WriteJson(string incomingFilePath, string outgoingFilePath, string unitType)
+    {
+        var requestedUnitType = _unitTypes.Find(unit => unit.IsRequestedType(unitType));
+       
+        using (FileStream fs = File.OpenRead(incomingFilePath))
+        using (JsonDocument doc = JsonDocument.Parse(fs))
+        {
+            var root = doc.RootElement;
+            if (root.TryGetProperty("input", out var inputArray)
+                && inputArray.ValueKind == JsonValueKind.Array)
+            {
+                try
+                {
+                    using (StreamWriter writer = new StreamWriter(outgoingFilePath))
+                    {
+                        writer.Write("{");
+                        writer.Write("\"output\": [");
+
+                        for (int i = 1; i < inputArray.GetArrayLength(); i++)
+                        {
+                            OutgoingData outgoingData = JsonDeserialize(inputArray[i - 1],
+                                inputArray[i], requestedUnitType);
+                            string outputJson = JsonSerializer.Serialize(outgoingData);
+                            writer.Write(outputJson);
+
+                            if (i + 1 < inputArray.GetArrayLength())
+                            {
+                                writer.Write(", ");
+                            }
+                        }
+                        writer.Write("]");
+                        writer.Write("}");
+                        
+                        Console.WriteLine("Json successfully created in the provided directory");
+                    }
+                }
+                catch (UnauthorizedAccessException ex) 
+                {
+                    Console.WriteLine(ex.Message + "\nPlease have the right authorization, " +
+                                      "and relaunch the application then.");
+                }
+            } else {
+                Console.WriteLine("The provided json has a different structure from the expected one.\n" +
+                                  "The main key has to be 'input', which must have an array as a value,\n" +
+                                  "that contains the 'date' the 'time' and the 'GPSP'('lat' 'lon') data records.\n" +
+                                  "Please have one accordingly, and relaunch the application then.");
+            }
+        }
+    }
+    
     private OutgoingData JsonDeserialize(JsonElement jsonElement1, JsonElement jsonElement2, IUnitType requestedUnitType)
     {
         var jsonElement1ToObj = jsonElement1.Deserialize<IncomingData>();
