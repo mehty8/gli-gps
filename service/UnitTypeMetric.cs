@@ -27,4 +27,16 @@ public class UnitTypeMetric : IUnitType
    
         return distance;
     }
+    
+    private int CalculateBearing(double lat1, double lat2, double lon1, double lon2)
+    {
+        double lonDifference = lon2 - lon1;
+        double y = Math.Sin(lonDifference) * Math.Cos(lat2);
+        double x = Math.Cos(lat1) * Math.Sin(lat2) - Math.Sin(lat1) * Math.Cos(lat2) * Math.Cos(lonDifference);
+
+        double bearing = Math.Atan2(y, x);
+        double bearingDegrees = (bearing * 180) / Math.PI;
+
+        return (int)(bearingDegrees + 360) % 360;
+    }
 }
