@@ -8,7 +8,12 @@ public class UnitTypeMetric : IUnitType
     }
     public Dictionary<string, int> Calculate(double lat1, double lat2, double lon1, double lon2)
     {
-        return null;
+        Dictionary<string, int> calculations = new();
+        int distance = CalculateDistance(lat1, lat2, lon1, lon2);
+        int bearing = CalculateBearing(lat1, lat2, lon1, lon2);
+        calculations.Add("distance", distance);
+        calculations.Add("bearing", bearing);
+        return calculations;
     }
     private int CalculateDistance(double lat1, double lat2, double lon1, double lon2)
     {
