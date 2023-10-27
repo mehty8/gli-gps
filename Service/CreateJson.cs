@@ -104,16 +104,4 @@ public class CreateJson
         OutgoingData outgoingData = new OutgoingData(gpsp, resultDistance, resultBearing);
         return outgoingData;
     }
-    
-    /*double radLat1 = (Math.PI / 180) * jsonElement1ToObj.GPSP.lat;
-        double radLat2 = (Math.PI / 180) * jsonElement2ZoObj.GPSP.lat;
-        double radLon1 = (Math.PI / 180) * jsonElement1ToObj.GPSP.lon;
-        double radLon2 = (Math.PI / 180) * jsonElement2ZoObj.GPSP.lon;
-
-        Dictionary<string, int> calculationResult = requestedUnitType.Calculate(radLat1, radLat2, radLon1, radLon2);
-        int resultDistance = calculationResult["distance"];
-        int resultBearing = calculationResult["bearing"];
-        Gpsp gpsp = new Gpsp(jsonElement1ToObj.GPSP.lat, jsonElement1ToObj.GPSP.lon);
-        OutgoingData outgoingData = new OutgoingData(gpsp, resultDistance, resultBearing);
-        return outgoingData;*/
 }
