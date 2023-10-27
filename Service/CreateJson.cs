@@ -12,6 +12,9 @@ public class CreateJson
         _unitTypes = unitTypes;
     }
     
+    //Creates the new json file with the calculations done by one of the uniType class.
+    //Configured to handle json files that would extend the memory
+    //Checks more-difficult-to-fix errors
     public void WriteJson(string incomingFilePath, string outgoingFilePath, string unitType)
     {
         var requestedUnitType = _unitTypes.Find(unit => unit.IsRequestedType(unitType));
@@ -62,6 +65,7 @@ public class CreateJson
         }
     }
     
+    //Deserialize and returns a new outgoing object with the calculation
     private OutgoingData JsonDeserialize(JsonElement jsonElement1, JsonElement jsonElement2, IUnitType requestedUnitType)
     {
         var jsonElement1ToObj = jsonElement1.Deserialize<IncomingData>();

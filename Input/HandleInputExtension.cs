@@ -2,6 +2,7 @@
 
 namespace gli_gps.Input;
 
+//the extension methods check the inputs for errors, and inform the user about them. Return true if no error found.
 public static class HandleInputExtension
 {
     public static bool CheckIncomingFilePath(this string input)
