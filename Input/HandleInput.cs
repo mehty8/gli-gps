@@ -4,6 +4,7 @@ namespace gli_gps.Input;
 
 public class HandleInput : IHandleInput
 {
+    //checks and returns the incoming json filepath
     public string GetIncomingFilePath(string message)
     {
         Console.WriteLine(message);
@@ -16,6 +17,7 @@ public class HandleInput : IHandleInput
         return input;
     }
 
+    //checks and returns the outgoing json filepath
     public string GetOutgoingFilePath(string message)
     {
         Console.WriteLine(message);
@@ -28,6 +30,7 @@ public class HandleInput : IHandleInput
         return input;
     }
 
+    //checks and returns the chosen unit type
     public string GetUnitType(string message)
     {
         Console.WriteLine(message);
